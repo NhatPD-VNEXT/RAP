@@ -1,0 +1,25 @@
+@EndUserText.label : '{{CASE_NAME}} Header'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #LIMITED
+define table {{TABLE}} {
+
+  key client                  : abap.clnt not null;
+  key sales_order             : sysuuid_x16 not null;
+
+  document_number             : abap.char(20);
+  // ... business fields ...
+
+  @Semantics.user.createdBy: true
+  created_by                  : abp_creation_user;
+  @Semantics.systemDateTime.createdAt: true
+  created_at                  : timestampl;
+  @Semantics.user.lastChangedBy: true
+  last_changed_by             : abp_last_change_user;
+  @Semantics.systemDateTime.lastChangedAt: true
+  last_updated_at             : timestampl;
+  @Semantics.systemDateTime.localInstanceLastChangedAt: true
+  local_last_updated_at       : timestampl;
+
+}

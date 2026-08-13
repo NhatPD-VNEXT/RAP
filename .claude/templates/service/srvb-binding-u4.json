@@ -1,0 +1,9 @@
+{
+  "name":               "{{SRVB_NAME}}",
+  "package":            "{{PACKAGE}}",
+  "description":        "Service Binding for {{SRVD_NAME}}",
+  "bindingType":        "ODATA_V4_UI",
+  "serviceDefinition":  "{{SRVD_NAME}}",
+  "category":           "C0",
+  "note":               "U4 = OData V4 Fiori UI binding. Activate xong tự sinh runtime artifact + IAM App template."
+}

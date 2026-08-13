@@ -1,0 +1,23 @@
+@EndUserText.label : '{{CASE_NAME}} Item'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #LIMITED
+define table {{TABLE_ITEM}} {
+
+  key client            : abap.clnt not null;
+  key sales_order       : sysuuid_x16 not null;
+  key item_number       : sysuuid_x16 not null;
+
+  material              : abap.char(40);
+  quantity              : abap.quan(13, 3);
+  quantity_unit         : abap.unit(3);
+  net_amount            : abap.curr(24, 2);
+  currency              : abap.cuky;
+
+  @Semantics.systemDateTime.lastChangedAt: true
+  last_updated_at       : timestampl;
+  @Semantics.systemDateTime.localInstanceLastChangedAt: true
+  local_last_updated_at : timestampl;
+
+}

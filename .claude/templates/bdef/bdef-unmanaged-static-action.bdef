@@ -1,0 +1,30 @@
+unmanaged implementation in class {{BEHAVIOR_CLASS}} unique;
+strict ( 2 );
+
+define behavior for {{DATA_MODEL}} alias Log
+lock master
+authorization master ( instance )
+etag master LocalLastUpdatedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) RequestId, CreatedBy, CreatedAt;
+  field ( numbering : managed ) RequestId;
+
+  // Static action không bind entity instance — chấp nhận parameter abstract entity
+  static action ProcessRequest
+    parameter {{ABSTRACT_INPUT}}
+    result    [0..1] {{ABSTRACT_OUTPUT}};
+
+  mapping for {{TABLE}}
+  {
+    RequestId          = request_id;
+    Status             = status;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastUpdatedAt      = last_updated_at;
+    LocalLastUpdatedAt = local_last_updated_at;
+  }
+}

@@ -1,0 +1,12 @@
+abstract;
+strict ( 2 );
+
+// Input abstract entity cho static action parameter
+define behavior for {{ABSTRACT_INPUT}} alias Input
+{
+}
+
+// Output abstract entity cho static action result
+define behavior for {{ABSTRACT_OUTPUT}} alias Output
+{
+}

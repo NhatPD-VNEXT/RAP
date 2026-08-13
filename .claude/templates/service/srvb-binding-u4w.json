@@ -1,0 +1,9 @@
+{
+  "name":               "{{SRVB_NAME}}",
+  "package":            "{{PACKAGE}}",
+  "description":        "Service Binding for {{SRVD_NAME}}",
+  "bindingType":        "ODATA_V4_WEBAPI",
+  "serviceDefinition":  "{{SRVD_NAME}}",
+  "category":           "C0",
+  "note":               "U4W = OData V4 Web API for system-to-system. No Fiori UI."
+}

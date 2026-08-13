@@ -1,0 +1,8 @@
+@EndUserText.label: 'Service Definition for {{SRVD_NAME}}'
+define service {{SRVD_NAME}} {
+  expose {{PROJECTION}}      as {{ENTITY_ALIAS}};
+  expose {{PROJECTION_ITEM}} as {{ENTITY_ALIAS}}Item;
+  // expose value helps if needed:
+  // expose I_Currency  as Currency;
+  // expose I_Material  as Material;
+}

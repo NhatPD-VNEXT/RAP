@@ -1,0 +1,29 @@
+# Claude Code local overrides (per-machine, chứa permission/MCP enable)
+.claude/settings.local.json
+
+# Memory store local
+.agentmemory/
+**/standalone.json
+
+# Case data — BD/spec khách hàng, design, review, snapshot ABAP.
+# KHÔNG push lên GitHub (dữ liệu nghiệp vụ khách hàng). Repo chỉ chứa framework.
+package/*
+!package/README.md
+
+# Hook cache (SessionStart system-connection cache)
+.claude/.cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Node (agentmemory MCP qua npx)
+node_modules/
+npm-debug.log*
+
+# Secret — nếu tách auth ra file riêng
+.env
+.env.*

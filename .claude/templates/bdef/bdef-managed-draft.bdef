@@ -1,0 +1,72 @@
+managed implementation in class {{BEHAVIOR_CLASS}} unique;
+strict ( 2 );
+with draft;
+
+define behavior for {{DATA_MODEL}} alias Header
+persistent table {{TABLE}}
+draft table {{TABLE}}_d
+lock master
+total etag LastUpdatedAt
+authorization master ( instance, global )
+etag master LocalLastUpdatedAt
+{
+  create ( authorization : global );
+  update;
+  delete ( precheck );
+
+  field ( readonly ) SalesOrder, CreatedBy, CreatedAt, LastChangedBy, LastUpdatedAt, LocalLastUpdatedAt;
+  field ( numbering : managed ) SalesOrder;
+
+  association _Item { create ( features : instance ); with draft; }
+
+  validation vldBeforeSave on save { create; update; }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare { validation vldBeforeSave; }
+
+  // side effects { field <Trigger> affects entity _Item, messages, $self; }
+  // determination <det1> on modify { field <X>; }
+  // determination <det2> on save { create; }
+
+  mapping for {{TABLE}}
+  {
+    SalesOrder         = sales_order;
+    DocumentNumber     = document_number;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastUpdatedAt      = last_updated_at;
+    LocalLastUpdatedAt = local_last_updated_at;
+  }
+}
+
+define behavior for {{DATA_MODEL_ITEM}} alias Item
+persistent table {{TABLE_ITEM}}
+draft table {{TABLE_ITEM}}_d
+lock dependent by _Header
+authorization dependent by _Header
+{
+  update;
+  delete;
+
+  field ( readonly ) SalesOrder, ItemNumber;
+  field ( numbering : managed ) ItemNumber;
+
+  association _Header { with draft; }
+
+  mapping for {{TABLE_ITEM}}
+  {
+    SalesOrder         = sales_order;
+    ItemNumber         = item_number;
+    Material           = material;
+    Quantity           = quantity;
+    QuantityUnit       = quantity_unit;
+    NetAmount          = net_amount;
+    Currency           = currency;
+    LastUpdatedAt      = last_updated_at;
+    LocalLastUpdatedAt = local_last_updated_at;
+  }
+}

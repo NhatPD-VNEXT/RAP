@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {},
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Read(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "mcp__sap-adt__list_systems",
+      "mcp__sap-adt__list_package",
+      "mcp__sap-adt__search_objects",
+      "mcp__sap-adt__grep_package",
+      "mcp__sap-adt__get_source",
+      "mcp__sap-adt__get_source_by_uri",
+      "mcp__sap-adt__get_class_include",
+      "mcp__sap-adt__get_object_structure",
+      "mcp__sap-adt__find_references",
+      "mcp__sap-adt__cds_dependencies",
+      "mcp__sap-adt__api_release_state",
+      "mcp__sap-adt__syntax_check",
+      "mcp__sap-adt__refresh_cookies_for",
+      "mcp__sap-abap__sap_get_object_details",
+      "mcp__sap-abap__sap_search_objects",
+      "mcp__sap-docs__search",
+      "mcp__agentmemory__memory_smart_search",
+      "mcp__agentmemory__memory_recall",
+      "mcp__agentmemory__memory_save",
+      "mcp__chrome-devtools__list_network_requests",
+      "mcp__sap-adt__data_preview"
+    ],
+    "deny": [
+      "Bash(rm -rf*)",
+      "Bash(git push --force*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__sap-adt__(create_object|update_source|update_class_include)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/GuardDeploy.mjs"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__sap-adt__(get_source|api_release_state|list_package|cds_dependencies|get_class_include|update_source|update_class_include|create_object|activate)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/CacheMetadata.mjs"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__sap-adt__(create_object|update_source|update_class_include|activate)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/DeployLog.mjs"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/PreCompact.mjs"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/UserPromptSubmit.mjs"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/SessionStart.mjs"
+          }
+        ]
+      }
+    ]
+  },
+  "outputStyle": "terse"
+}
